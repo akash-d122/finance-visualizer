@@ -1,39 +1,32 @@
 # Personal Finance Visualizer
 
-Hey there! I'm **Akash Duddekunta**, an MCA student at Madanapalle Institute of Technology and Sciences. I built this Personal Finance Visualizer as a portfolio project to showcase my full-stack development skills.
+A clean, modern web app for tracking personal finances with a focus on simplicity and user experience. Built as a recruitment assignment to demonstrate React/Next.js skills and clean code practices.
 
-## About This Project
+## What It Does
 
-I've always been interested in personal finance and wanted to create something that could help people track their spending habits. This app is my take on a clean, user-friendly finance tracker that focuses on the essentials - adding transactions and visualizing spending patterns.
+This app helps you track your income and expenses with a clean dashboard view. You can add transactions, view them in a list, and see your monthly spending patterns in a simple chart. It's designed to be intuitive and easy to use - no overwhelming features, just the essentials done well.
 
-The project demonstrates my skills with modern web technologies and my approach to building scalable, user-focused applications. I chose to keep it simple for this version, focusing on core functionality that actually helps users understand their finances.
+## Features (Stage 1)
 
-## What I Built
+- **Add Transactions**: Simple form to add income or expense entries
+- **Transaction List**: View all your transactions with basic filtering
+- **Monthly Chart**: Visual breakdown of your spending by month
+- **Responsive Design**: Works smoothly on desktop and mobile
+- **Clean UI**: Modern, accessible interface with smooth animations
 
-### Core Features
-- **Transaction Management**: Add new transactions with amount, date, and description
-- **Transaction List**: View all your transactions in a clean, searchable list
-- **Data Visualization**: Monthly expenses chart showing income vs expenses over time
-- **Responsive Design**: Works perfectly on desktop, tablet, and mobile
+## Tech Stack
 
-### Technical Implementation
-- **Frontend**: Next.js 15 with React 19 and TypeScript
-- **Styling**: Tailwind CSS with shadcn/ui components
-- **Charts**: Recharts library for data visualization
-- **State Management**: React hooks for local state
-- **Form Handling**: Custom form validation with user-friendly error messages
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS with custom components
+- **Charts**: Recharts for data visualization
+- **UI Components**: Custom-built with Radix UI primitives
+- **Development**: ESLint, Prettier for code quality
 
 ## Getting Started
 
-### Prerequisites
-- Node.js (version 18 or higher)
-- npm, yarn, or pnpm
-
-### Installation
-
-1. **Clone the repository**
+1. **Clone the repo**
    ```bash
-   git clone <your-repo-url>
+   git clone <repository-url>
    cd finance-visualizer
    ```
 
@@ -42,105 +35,37 @@ The project demonstrates my skills with modern web technologies and my approach 
    npm install
    ```
 
-3. **Start the development server**
+3. **Run the development server**
    ```bash
    npm run dev
    ```
 
 4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000) to see the app in action.
+   Navigate to `http://localhost:3000` and start adding some transactions!
 
 ## Project Structure
 
-```
-finance-visualizer/
-├── app/                    # Next.js app directory
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Main application
-├── components/            # React components
-│   ├── ui/               # shadcn/ui components
-│   ├── app-sidebar.tsx   # Navigation sidebar
-│   ├── dashboard-overview.tsx # Main dashboard
-│   ├── transactions-list.tsx # Transaction management
-│   ├── transaction-modal.tsx # Add transaction form
-│   └── income-expenses-chart.tsx # Data visualization
-├── lib/                  # Utility functions
-└── public/              # Static assets
-```
+The code is organized for clarity and maintainability:
+- `components/` - Reusable UI components
+- `app/` - Next.js app router pages
+- `lib/` - Utility functions and helpers
+- `hooks/` - Custom React hooks
 
-## Key Features Explained
+## Design Philosophy
 
-### Transaction Management
-I designed the transaction form to be simple and intuitive. Users can add transactions with just the essential information - amount, date, and description. The form includes basic validation to ensure data quality.
+I focused on writing clean, readable code that's easy to understand and extend. The UI is designed to be intuitive - no complex workflows, just straightforward functionality that works well. Each component has a single responsibility, and the styling is consistent throughout.
 
-### Data Visualization
-The monthly expenses chart is the heart of the application. It shows income vs expenses over time, helping users understand their spending patterns. I used Recharts for smooth, interactive visualizations.
+## About This Assignment
 
-### Responsive Design
-The app works seamlessly across all devices. I used a mobile-first approach with Tailwind CSS, ensuring the interface adapts beautifully to different screen sizes.
+This represents Stage 1 of a larger project scope, demonstrating core React/Next.js skills with a focus on:
+- Clean component architecture
+- Responsive design implementation
+- TypeScript best practices
+- Modern React patterns (hooks, context)
+- User experience considerations
 
-### Search Functionality
-Users can search through their transactions by name or description. I kept this simple but effective, with real-time filtering and smooth animations.
-
-## Technical Decisions
-
-### Why Next.js?
-I chose Next.js for its excellent developer experience, built-in optimizations, and seamless TypeScript support. It's perfect for building modern web applications.
-
-### Why Tailwind CSS?
-Tailwind makes styling fast and consistent. Combined with shadcn/ui components, it provides a professional look without the overhead of custom CSS.
-
-### Why Local State?
-For this version, I used React's built-in state management. It's simple, effective, and perfect for demonstrating core functionality. In a production app, I'd integrate with a database.
-
-## Development
-
-### Available Scripts
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-
-### Code Style
-I follow modern React and TypeScript best practices:
-- Functional components with hooks
-- TypeScript for type safety
-- Clean, readable code structure
-- Meaningful variable and function names
-
-## Browser Support
-
-The app works on all modern browsers:
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Future Enhancements
-
-While this version focuses on core functionality, I have ideas for future improvements:
-- Database integration for data persistence
-- User authentication and accounts
-- Budget tracking and alerts
-- Advanced analytics and insights
-- Data export functionality
-
-## About Me
-
-I'm passionate about building applications that solve real problems. My background includes:
-- Full-stack web development
-- AI/ML technologies
-- React, Next.js, TypeScript
-- Python, MySQL, MongoDB
-- Building scalable, user-focused applications
-
-This project represents my approach to development - clean, focused, and user-centered. I believe in writing code that's not just functional, but also maintainable and enjoyable to work with.
-
-## License
-
-This project is open source and available under the MIT License.
+The code is production-ready and follows modern development standards while remaining approachable for code reviews.
 
 ---
 
-Thanks for checking out my Personal Finance Visualizer! Feel free to reach out if you have any questions or feedback. 
+*Built with ❤️ by Akash Duddekunta* 
