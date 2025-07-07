@@ -23,6 +23,7 @@ export function DashboardContent({
       return <TransactionsList onAddTransaction={onAddTransaction} transactions={transactions} />
     // STAGE 2 FEATURE COMMENTED OUT - Budget and Settings cases removed
     default:
+      // Stage 2: Dashboard overview with analytics and filters
       return <DashboardOverview onAddTransaction={onAddTransaction} onNavigate={onNavigate} />
   }
 }

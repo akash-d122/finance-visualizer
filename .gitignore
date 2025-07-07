@@ -26,17 +26,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Stage 2 & 3 Development Files - Excluded for Stage 1 submission
-# These files contain advanced features not part of Stage 1 requirements
-components/budget-view.tsx
-components/budget-modal.tsx
-components/settings-view.tsx
-components/summary-cards.tsx
-components/category-chart.tsx
-components/dashboard-filters.tsx
-components/income-expenses-trend-chart.tsx
-components/card-details-modal.tsx
-
 # IDE and Editor Files
 .vscode/
 .idea/

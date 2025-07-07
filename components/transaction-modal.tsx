@@ -24,20 +24,21 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
   const [amount, setAmount] = useState("")
   const [date, setDate] = useState("")
   const [description, setDescription] = useState("")
+  const [category, setCategory] = useState("")
 
   // Handle form submission with basic validation
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     
     // Simple validation - could be enhanced with a proper form library
-    if (!amount || !description || !transactionType) {
+    if (!amount || !description || !transactionType || !category) {
       alert("Please fill in all required fields")
       return
     }
     
     // Process the transaction data
     if (onAddTransaction) {
-      onAddTransaction({ type: transactionType, amount, date, description })
+      onAddTransaction({ type: transactionType, amount, date, description, category })
     }
     
     // Reset form and close modal
@@ -45,6 +46,7 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
     setAmount("")
     setDate("")
     setDescription("")
+    setCategory("")
     onClose()
   }
 
@@ -145,6 +147,32 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
                   text-base hover:shadow-md transition-all duration-300"
                 required
               />
+            </div>
+
+            {/* Category selection - Stage 2 feature restored! */}
+            <div className="space-y-3">
+              <Label htmlFor="category" className="text-sm font-semibold text-gray-700">
+                Category *
+              </Label>
+              <Select value={category} onValueChange={setCategory} required>
+                <SelectTrigger
+                  className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 \
+                  h-12 text-base hover:shadow-md transition-all duration-300"
+                >
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent className="rounded-xl border-0 shadow-xl">
+                  <SelectItem value="Food & Dining" className="rounded-lg">Food & Dining</SelectItem>
+                  <SelectItem value="Transportation" className="rounded-lg">Transportation</SelectItem>
+                  <SelectItem value="Entertainment" className="rounded-lg">Entertainment</SelectItem>
+                  <SelectItem value="Utilities" className="rounded-lg">Utilities</SelectItem>
+                  <SelectItem value="Shopping" className="rounded-lg">Shopping</SelectItem>
+                  <SelectItem value="Healthcare" className="rounded-lg">Healthcare</SelectItem>
+                  <SelectItem value="Income" className="rounded-lg">Income</SelectItem>
+                  <SelectItem value="Freelance" className="rounded-lg">Freelance</SelectItem>
+                  <SelectItem value="Other" className="rounded-lg">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
 
             {/* Form actions */}
