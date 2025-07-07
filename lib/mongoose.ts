@@ -18,12 +18,6 @@ if (process.env.NODE_ENV !== "production") {
 
 const MONGODB_URI = process.env.MONGODB_URI as string
 
-if (!MONGODB_URI) {
-  throw new Error(
-    "MONGODB_URI is not defined. Please set it in your environment variables or .env file."
-  )
-}
-
 /**
  * Connects to MongoDB using Mongoose.
  * Ensures we only create one connection across hot reloads in development.
@@ -32,6 +26,11 @@ if (!MONGODB_URI) {
  *         await connectToDatabase()
  */
 export async function connectToDatabase() {
+  if (!MONGODB_URI) {
+    throw new Error(
+      "MONGODB_URI is not defined. Please set it in your environment variables or .env file."
+    )
+  }
   // If already connected, just return
   if (mongoose.connection.readyState >= 1) {
     return mongoose.connection
