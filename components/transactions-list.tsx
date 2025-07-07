@@ -5,20 +5,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
-import { Search, Plus, CreditCard } from "lucide-react"
+import { Search, Plus, CreditCard, Filter } from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 // NOTE for recruiters and reviewers:
 // This component currently uses mock/demo data for transactions to keep the assignment self-contained and easy to run.
 // To make it fully dynamic, just connect a real MongoDB instance (Atlas or local), set MONGODB_URI, and wire up the API routes provided in /app/api/transactions.
 // All backend logic is ready for production—just flip the switch!
 
-// Sample transaction data for demonstration purposes
-// In a real app, this would come from a database
+// Updated: Transaction dates are now distributed from July 2024 to July 2025 for realistic demo filtering
 const sampleTransactions = [
   {
     id: 1,
     name: "Swiggy Food Order",
-    date: "2024-08-22",
+    date: "2024-07-10",
     amount: 450,
     time: "10:00 AM",
     account: "HDFC 7834",
@@ -29,7 +29,7 @@ const sampleTransactions = [
   {
     id: 2,
     name: "Netflix Subscription",
-    date: "2024-08-21",
+    date: "2024-08-15",
     amount: 199,
     time: "2:30 PM",
     account: "HDFC 7834",
@@ -40,7 +40,7 @@ const sampleTransactions = [
   {
     id: 3,
     name: "Salary Credit",
-    date: "2024-08-20",
+    date: "2024-09-01",
     amount: 45000,
     time: "9:00 AM",
     account: "SBI 1234",
@@ -51,7 +51,7 @@ const sampleTransactions = [
   {
     id: 4,
     name: "Big Bazaar Groceries",
-    date: "2024-08-19",
+    date: "2024-10-05",
     amount: 1250,
     time: "6:45 PM",
     account: "HDFC 7834",
@@ -62,7 +62,7 @@ const sampleTransactions = [
   {
     id: 5,
     name: "Petrol Pump",
-    date: "2024-08-18",
+    date: "2024-11-12",
     amount: 2500,
     time: "8:30 AM",
     account: "HDFC 7834",
@@ -73,7 +73,7 @@ const sampleTransactions = [
   {
     id: 6,
     name: "Freelance Payment",
-    date: "2024-08-17",
+    date: "2024-12-20",
     amount: 15000,
     time: "3:00 PM",
     account: "SBI 1234",
@@ -84,7 +84,7 @@ const sampleTransactions = [
   {
     id: 7,
     name: "Amazon Shopping",
-    date: "2024-08-16",
+    date: "2025-01-14",
     amount: 3200,
     time: "11:30 AM",
     account: "HDFC 7834",
@@ -95,7 +95,7 @@ const sampleTransactions = [
   {
     id: 8,
     name: "Electricity Bill",
-    date: "2024-08-15",
+    date: "2025-02-09",
     amount: 1800,
     time: "4:15 PM",
     account: "SBI 1234",
@@ -106,7 +106,7 @@ const sampleTransactions = [
   {
     id: 9,
     name: "Uber Ride",
-    date: "2024-08-14",
+    date: "2025-03-18",
     amount: 350,
     time: "7:20 PM",
     account: "HDFC 7834",
@@ -117,7 +117,7 @@ const sampleTransactions = [
   {
     id: 10,
     name: "Movie Tickets",
-    date: "2024-08-13",
+    date: "2025-04-22",
     amount: 800,
     time: "6:00 PM",
     account: "HDFC 7834",
@@ -128,7 +128,7 @@ const sampleTransactions = [
   {
     id: 11,
     name: "Gym Membership",
-    date: "2024-08-12",
+    date: "2025-05-05",
     amount: 2000,
     time: "10:00 AM",
     account: "SBI 1234",
@@ -139,7 +139,7 @@ const sampleTransactions = [
   {
     id: 12,
     name: "Dividend Credit",
-    date: "2024-08-11",
+    date: "2025-06-11",
     amount: 5000,
     time: "12:00 PM",
     account: "SBI 1234",
@@ -150,7 +150,7 @@ const sampleTransactions = [
   {
     id: 13,
     name: "Zomato Order",
-    date: "2024-08-10",
+    date: "2025-07-01",
     amount: 650,
     time: "8:30 PM",
     account: "HDFC 7834",
@@ -161,7 +161,7 @@ const sampleTransactions = [
   {
     id: 14,
     name: "Phone Recharge",
-    date: "2024-08-09",
+    date: "2025-07-10",
     amount: 399,
     time: "2:15 PM",
     account: "HDFC 7834",
@@ -172,7 +172,7 @@ const sampleTransactions = [
   {
     id: 15,
     name: "Book Purchase",
-    date: "2024-08-08",
+    date: "2025-07-15",
     amount: 1200,
     time: "11:45 AM",
     account: "HDFC 7834",
@@ -204,26 +204,73 @@ export function TransactionsList({ onAddTransaction, transactions = [] }: Transa
   // Filtered transactions based on search
   const [filteredTransactions, setFilteredTransactions] = useState<any[]>([])
 
-  // Apply search filter with a small delay for better UX
+  // Filters for category, type, and date range
+  const [categoryFilter, setCategoryFilter] = useState("all")
+  const [typeFilter, setTypeFilter] = useState("all")
+  const [dateRange, setDateRange] = useState("all")
+
+  // Fix: Robust date filtering for all ranges, using start/end boundaries for each range
+  const filterByDateRange = (txns: any[], dateRange: string) => {
+    if (dateRange === "all") return txns
+    const now = new Date()
+    let start: Date, end: Date
+    switch (dateRange) {
+      case "this-month":
+        start = new Date(now.getFullYear(), now.getMonth(), 1)
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
+        break
+      case "last-month":
+        start = new Date(now.getFullYear(), now.getMonth() - 1, 1)
+        end = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59, 999)
+        break
+      case "last-3-months":
+        start = new Date(now.getFullYear(), now.getMonth() - 2, 1)
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
+        break
+      case "last-6-months":
+        start = new Date(now.getFullYear(), now.getMonth() - 5, 1)
+        end = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999)
+        break
+      case "this-year":
+        start = new Date(now.getFullYear(), 0, 1)
+        end = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999)
+        break
+      default:
+        return txns
+    }
+    return txns.filter((txn) => {
+      const txnDate = new Date(txn.date)
+      return txnDate >= start && txnDate <= end
+    })
+  }
+
+  // Apply all filters and search
   useEffect(() => {
     setIsLoading(true)
-
-    const filtered = allTransactions.filter((transaction) => {
-      const matchesSearch =
-        transaction.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (transaction.description && transaction.description.toLowerCase().includes(searchQuery.toLowerCase()))
-      
-      return matchesSearch
-    })
-
-    // Small delay to show loading state - makes the app feel more responsive
+    let filtered = allTransactions
+    if (categoryFilter !== "all") {
+      filtered = filtered.filter((txn) =>
+        txn.category && txn.category.toLowerCase().includes(categoryFilter.toLowerCase())
+      )
+    }
+    if (typeFilter !== "all") {
+      filtered = filtered.filter((txn) => txn.type === typeFilter)
+    }
+    filtered = filterByDateRange(filtered, dateRange)
+    if (searchQuery) {
+      filtered = filtered.filter((transaction) => {
+        const matchesSearch =
+          transaction.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (transaction.description && transaction.description.toLowerCase().includes(searchQuery.toLowerCase()))
+        return matchesSearch
+      })
+    }
     const timer = setTimeout(() => {
       setFilteredTransactions(filtered)
       setIsLoading(false)
-    }, 400)
-
+    }, 300)
     return () => clearTimeout(timer)
-  }, [allTransactions, searchQuery])
+  }, [allTransactions, searchQuery, categoryFilter, typeFilter, dateRange])
 
   // Format date for display
   const formatDate = (dateString: string) => {
@@ -282,6 +329,65 @@ export function TransactionsList({ onAddTransaction, transactions = [] }: Transa
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Filters section - styled to match dashboard filters */}
+      <Card className="bg-white border border-gray-200 shadow-md rounded-xl animate-in fade-in slide-in-from-top-4 duration-500">
+        <CardContent className="p-4 sm:p-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
+          <div className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+            <div className="p-1.5 bg-orange-100 rounded-lg">
+              <Filter className="w-4 h-4 text-orange-600" />
+            </div>
+            <span>Filters</span>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 flex-1">
+            {/* Category filter */}
+            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+              <SelectTrigger className="w-44 bg-gray-50 border-gray-200 text-sm rounded-xl h-11 hover:bg-white hover:shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-300">
+                <SelectValue placeholder="All Categories" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-0 shadow-xl">
+                <SelectItem value="all" className="rounded-lg">All Categories</SelectItem>
+                <SelectItem value="Food & Dining" className="rounded-lg">Food & Dining</SelectItem>
+                <SelectItem value="Entertainment" className="rounded-lg">Entertainment</SelectItem>
+                <SelectItem value="Groceries" className="rounded-lg">Groceries</SelectItem>
+                <SelectItem value="Fuel & Transport" className="rounded-lg">Fuel & Transport</SelectItem>
+                <SelectItem value="Shopping" className="rounded-lg">Shopping</SelectItem>
+                <SelectItem value="Utilities" className="rounded-lg">Utilities</SelectItem>
+                <SelectItem value="Transportation" className="rounded-lg">Transportation</SelectItem>
+                <SelectItem value="Healthcare" className="rounded-lg">Healthcare</SelectItem>
+                <SelectItem value="Income" className="rounded-lg">Income</SelectItem>
+                <SelectItem value="Freelance" className="rounded-lg">Freelance</SelectItem>
+                <SelectItem value="Investment" className="rounded-lg">Investment</SelectItem>
+              </SelectContent>
+            </Select>
+            {/* Type filter */}
+            <Select value={typeFilter} onValueChange={setTypeFilter}>
+              <SelectTrigger className="w-44 bg-gray-50 border-gray-200 text-sm rounded-xl h-11 hover:bg-white hover:shadow-md transition-all duration-300 focus:ring-2 focus:ring-orange-300">
+                <SelectValue placeholder="All Types" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-0 shadow-xl">
+                <SelectItem value="all" className="rounded-lg">All Types</SelectItem>
+                <SelectItem value="income" className="rounded-lg">Income</SelectItem>
+                <SelectItem value="expense" className="rounded-lg">Expense</SelectItem>
+              </SelectContent>
+            </Select>
+            {/* Date range filter */}
+            <Select value={dateRange} onValueChange={setDateRange}>
+              <SelectTrigger className="w-44 bg-gray-50 border-gray-200 text-sm rounded-xl h-11 hover:bg-white hover:shadow-md transition-all duration-300 focus:ring-2 focus:ring-orange-300">
+                <SelectValue placeholder="All Dates" />
+              </SelectTrigger>
+              <SelectContent className="rounded-xl border-0 shadow-xl">
+                <SelectItem value="all" className="rounded-lg">All Dates</SelectItem>
+                <SelectItem value="this-month" className="rounded-lg">This Month</SelectItem>
+                <SelectItem value="last-month" className="rounded-lg">Last Month</SelectItem>
+                <SelectItem value="last-3-months" className="rounded-lg">Last 3 Months</SelectItem>
+                <SelectItem value="last-6-months" className="rounded-lg">Last 6 Months</SelectItem>
+                <SelectItem value="this-year" className="rounded-lg">This Year</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </CardContent>
       </Card>

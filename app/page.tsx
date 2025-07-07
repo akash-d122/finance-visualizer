@@ -6,16 +6,18 @@ import { DashboardHeader } from "@/components/dashboard-header"
 import { DashboardContent } from "@/components/dashboard-content"
 import { TransactionModal } from "@/components/transaction-modal"
 import { MobileHeader } from "@/components/mobile-header"
+import { BudgetModal } from "@/components/budget-modal"
 
 // Main application component - handles the overall layout and state management
 // I kept this simple for Stage 1, focusing on core transaction tracking functionality
 export default function FinanceVisualizer() {
   // Core navigation state - only dashboard and transactions for Stage 1
   // This keeps the app focused and user-friendly without overwhelming features
-  const [currentView, setCurrentView] = useState<"dashboard" | "transactions">("dashboard")
+  const [currentView, setCurrentView] = useState<"dashboard" | "transactions" | "budget" | "settings">("dashboard")
   
   // Modal states for user interactions
   const [showTransactionModal, setShowTransactionModal] = useState(false)
+  const [showBudgetModal, setShowBudgetModal] = useState(false)
   const [showMobileMenu, setShowMobileMenu] = useState(false)
   
   // Transaction data - using local state for Stage 1 demo
@@ -24,8 +26,8 @@ export default function FinanceVisualizer() {
 
   // Handle navigation between main views
   const handleViewChange = (view: string) => {
-    if (view === "dashboard" || view === "transactions") {
-      setCurrentView(view as "dashboard" | "transactions")
+    if (view === "dashboard" || view === "transactions" || view === "budget" || view === "settings") {
+      setCurrentView(view as "dashboard" | "transactions" | "budget" | "settings")
     }
   }
 
@@ -57,6 +59,7 @@ export default function FinanceVisualizer() {
           currentView={currentView}
           onViewChange={setCurrentView}
           onAddTransaction={() => setShowTransactionModal(true)}
+          onAddBudget={() => setShowBudgetModal(true)}
         />
       </aside>
 
@@ -73,6 +76,10 @@ export default function FinanceVisualizer() {
               }}
               onAddTransaction={() => {
                 setShowTransactionModal(true)
+                setShowMobileMenu(false)
+              }}
+              onAddBudget={() => {
+                setShowBudgetModal(true)
                 setShowMobileMenu(false)
               }}
             />
@@ -112,6 +119,12 @@ export default function FinanceVisualizer() {
         isOpen={showTransactionModal}
         onClose={() => setShowTransactionModal(false)}
         onAddTransaction={handleNewTransaction}
+      />
+      {/* Budget modal - appears when user wants to add a new budget */}
+      <BudgetModal
+        isOpen={showBudgetModal}
+        onClose={() => setShowBudgetModal(false)}
+        onAddBudget={() => {}}
       />
     </div>
   )

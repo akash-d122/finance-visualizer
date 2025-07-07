@@ -1,7 +1,7 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts"
+import * as PieChartLib from "recharts"
 import { useState, useMemo } from "react"
 import { PieChartIcon } from "lucide-react"
 
@@ -227,6 +227,27 @@ interface CategoryChartProps {
   categoryFilter: string
 }
 
+// Custom active shape for smooth, centered scaling on hover
+const renderActiveShape = (props: any) => {
+  const {
+    cx, cy, innerRadius, outerRadius, startAngle, endAngle, fill
+  } = props
+  return (
+    <g>
+      <PieChartLib.Sector
+        cx={cx}
+        cy={cy}
+        innerRadius={innerRadius}
+        outerRadius={outerRadius + 8} // Slightly larger for active slice
+        startAngle={startAngle}
+        endAngle={endAngle}
+        fill={fill}
+        style={{ filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.10))', transition: 'all 0.2s cubic-bezier(.4,2,.6,1)' }}
+      />
+    </g>
+  )
+}
+
 export function CategoryChart({ dateRange, categoryFilter }: CategoryChartProps) {
   const categoryData = useMemo(() => getCategoryData(dateRange, categoryFilter), [dateRange, categoryFilter])
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
@@ -258,27 +279,35 @@ export function CategoryChart({ dateRange, categoryFilter }: CategoryChartProps)
       </CardHeader>
       <CardContent className="px-4 sm:px-6">
         <div className="h-64 sm:h-72">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
+          <PieChartLib.ResponsiveContainer width="100%" height="100%">
+            <PieChartLib.PieChart>
+              <PieChartLib.Pie
                 data={categoryData}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
-                label={renderCustomLabel}
+                label={activeIndex === null ? renderCustomLabel : undefined}
                 outerRadius={90}
                 fill="#8884d8"
                 dataKey="value"
                 isAnimationActive
+                onMouseLeave={handlePieLeave}
+                // @ts-ignore: activeIndex and activeShape are supported by Recharts at runtime, but not in the type definitions
+                activeIndex={activeIndex ?? -1}
+                activeShape={renderActiveShape}
               >
                 {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={entry.color} />
+                  <PieChartLib.Cell
+                    key={`cell-${index}`}
+                    fill={entry.color}
+                    onMouseEnter={() => handlePieEnter(null, index)}
+                  />
                 ))}
-              </Pie>
-              <Tooltip />
-              <Legend />
-            </PieChart>
-          </ResponsiveContainer>
+              </PieChartLib.Pie>
+              <PieChartLib.Tooltip />
+              <PieChartLib.Legend />
+            </PieChartLib.PieChart>
+          </PieChartLib.ResponsiveContainer>
         </div>
       </CardContent>
     </Card>

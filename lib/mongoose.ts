@@ -1,12 +1,20 @@
 // lib/mongoose.ts
 
 import mongoose from "mongoose"
+// Load environment variables from .env if present (for local dev)
+if (process.env.NODE_ENV !== "production") {
+  // Only require dotenv in non-production to avoid unnecessary dependency in prod builds
+  // This lets you use a .env file locally without risk of leaking secrets
+  require("dotenv").config()
+}
 
 // This utility manages the MongoDB connection for the app.
 // It uses the MONGODB_URI environment variable for flexibility and security.
 //
-// If you're running locally, add MONGODB_URI to your .env file.
+// To run locally, add MONGODB_URI to your .env file (never commit this file!).
 // Example: MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/finance
+//
+// If you see a connection error, double-check your .env file and credentials.
 
 const MONGODB_URI = process.env.MONGODB_URI as string
 

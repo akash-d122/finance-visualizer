@@ -58,3 +58,7 @@ coverage/
 # Temporary folders
 tmp/
 temp/
+
+# Local environment variables
+.env
+.env.*

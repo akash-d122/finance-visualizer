@@ -95,7 +95,7 @@ export function BudgetView() {
         </div>
         <Button
           onClick={() => setIsBudgetModalOpen(true)}
-          className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white self-start sm:self-auto"
+          className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 focus:ring-2 focus:ring-blue-300 text-white text-xs sm:text-sm h-10 sm:h-11 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center px-4 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4 mr-2" />
           Add Budget

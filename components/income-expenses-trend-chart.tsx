@@ -111,7 +111,6 @@ export function IncomeExpensesTrendChart({ dateRange, categoryFilter }: IncomeEx
                   boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
                 }}
                 formatter={(value, name) => [`₹${Number(value).toLocaleString("en-IN")}`, name]}
-                animationDuration={300}
               />
               <Legend />
               <Line
@@ -122,8 +121,6 @@ export function IncomeExpensesTrendChart({ dateRange, categoryFilter }: IncomeEx
                 dot={{ fill: "#10b981", strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 6, stroke: "#10b981", strokeWidth: 2 }}
                 name="Income"
-                animationDuration={1500}
-                animationBegin={0}
               />
               <Line
                 type="monotone"
@@ -133,8 +130,6 @@ export function IncomeExpensesTrendChart({ dateRange, categoryFilter }: IncomeEx
                 dot={{ fill: "#ef4444", strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 6, stroke: "#ef4444", strokeWidth: 2 }}
                 name="Expenses"
-                animationDuration={1500}
-                animationBegin={300}
               />
               <Line
                 type="monotone"
@@ -144,8 +139,6 @@ export function IncomeExpensesTrendChart({ dateRange, categoryFilter }: IncomeEx
                 dot={{ fill: "#3b82f6", strokeWidth: 2, r: 4 }}
                 activeDot={{ r: 6, stroke: "#3b82f6", strokeWidth: 2 }}
                 name="Savings"
-                animationDuration={1500}
-                animationBegin={600}
               />
             </LineChart>
           </ResponsiveContainer>

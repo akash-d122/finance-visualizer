@@ -4,17 +4,18 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
-import { LayoutDashboard, CreditCard, Plus, TrendingUp, Wallet } from "lucide-react"
+import { LayoutDashboard, CreditCard, Plus, TrendingUp, Wallet, Settings, PieChart } from "lucide-react"
 
 interface AppSidebarProps {
   currentView: string
-  onViewChange: (view: "dashboard" | "transactions") => void
+  onViewChange: (view: "dashboard" | "transactions" | "budget" | "settings") => void
   onAddTransaction: () => void
+  onAddBudget?: () => void // Optional handler for Add Budget modal
 }
 
 // Sidebar component - handles navigation and quick actions
 // I designed this to be clean and intuitive, with just the essentials for Stage 1
-export function AppSidebar({ currentView, onViewChange, onAddTransaction }: AppSidebarProps) {
+export function AppSidebar({ currentView, onViewChange, onAddTransaction, onAddBudget }: AppSidebarProps) {
   // Navigation items - keeping it simple for Stage 1
   // Could easily extend this for future features like budget tracking
   const navigationItems = [
@@ -29,6 +30,18 @@ export function AppSidebar({ currentView, onViewChange, onAddTransaction }: AppS
       label: "Transactions",
       icon: CreditCard,
       isActive: currentView === "transactions",
+    },
+    {
+      id: "budget",
+      label: "Budget",
+      icon: PieChart,
+      isActive: currentView === "budget",
+    },
+    {
+      id: "settings",
+      label: "Settings",
+      icon: Settings,
+      isActive: currentView === "settings",
     },
   ]
 
@@ -51,12 +64,19 @@ export function AppSidebar({ currentView, onViewChange, onAddTransaction }: AppS
       <div className="p-4 sm:p-6 space-y-2 sm:space-y-3 flex-shrink-0">
         <Button
           onClick={onAddTransaction}
-          className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs sm:text-sm h-8 sm:h-10"
+          className="w-full bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:to-orange-700 focus:ring-2 focus:ring-orange-300 text-white text-xs sm:text-sm h-10 sm:h-11 rounded-xl shadow-md transition-all duration-200"
         >
-          <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+          <Plus className="w-4 h-4 mr-2" />
           Add Transaction
         </Button>
-        {/* Future enhancement: could add budget management button here */}
+        {/* Add Budget quick action - opens modal if handler provided, else navigates to Budget page */}
+        <Button
+          onClick={onAddBudget ? onAddBudget : () => onViewChange("budget")}
+          className="w-full bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:from-blue-500 hover:to-blue-700 focus:ring-2 focus:ring-blue-300 text-white text-xs sm:text-sm h-10 sm:h-11 rounded-xl shadow-md transition-all duration-200"
+        >
+          <Plus className="w-4 h-4 mr-2" />
+          Add Budget
+        </Button>
       </div>
 
       {/* Main navigation menu */}
@@ -69,7 +89,7 @@ export function AppSidebar({ currentView, onViewChange, onAddTransaction }: AppS
               className={`w-full justify-start text-xs sm:text-sm h-8 sm:h-10 ${
                 item.isActive ? "bg-orange-100 text-orange-700 hover:bg-orange-200" : "text-gray-700 hover:bg-gray-100"
               }`}
-              onClick={() => onViewChange(item.id as "dashboard" | "transactions")}
+              onClick={() => onViewChange(item.id as "dashboard" | "transactions" | "budget" | "settings")}
             >
               <item.icon className="w-3 h-3 sm:w-4 sm:h-4 mr-2 sm:mr-3 flex-shrink-0" />
               <span className="truncate">{item.label}</span>

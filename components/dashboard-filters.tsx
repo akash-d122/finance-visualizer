@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Calendar, Filter } from "lucide-react"
+import { useMemo, useCallback } from "react"
 
 interface DashboardFiltersProps {
   dateRange: string
@@ -17,10 +18,30 @@ export function DashboardFilters({
   categoryFilter,
   onCategoryFilterChange,
 }: DashboardFiltersProps) {
+  // Memoize filter options to avoid unnecessary re-renders
+  const dateOptions = useMemo(() => [
+    { value: "this-month", label: "This Month" },
+    { value: "last-month", label: "Last Month" },
+    { value: "last-3-months", label: "Last 3 Months" },
+    { value: "last-6-months", label: "Last 6 Months" },
+    { value: "this-year", label: "This Year" },
+  ], [])
+  const categoryOptions = useMemo(() => [
+    { value: "all", label: "All Categories" },
+    { value: "food", label: "Food & Dining" },
+    { value: "transport", label: "Transportation" },
+    { value: "entertainment", label: "Entertainment" },
+    { value: "utilities", label: "Utilities" },
+    { value: "shopping", label: "Shopping" },
+    { value: "healthcare", label: "Healthcare" },
+  ], [])
+  // Memoize handlers for performance
+  const handleDateChange = useCallback(onDateRangeChange, [onDateRangeChange])
+  const handleCategoryChange = useCallback(onCategoryFilterChange, [onCategoryFilterChange])
+
   return (
     <Card
-      className="bg-white border border-gray-200 shadow-md hover:shadow-xl rounded-xl mx-2 sm:mx-0
-      animate-in fade-in zoom-in-90 slide-in-from-top-4 duration-500"
+      className="bg-white border border-gray-200 shadow-md hover:shadow-xl rounded-xl mx-2 sm:mx-0"
     >
       <CardContent className="p-4 sm:p-6 lg:p-8">
         {/* Mobile Layout */}
@@ -35,66 +56,40 @@ export function DashboardFilters({
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-gray-500 flex-shrink-0" />
-              <Select value={dateRange} onValueChange={onDateRangeChange}>
+              <Select value={dateRange} onValueChange={handleDateChange}>
                 <SelectTrigger
                   className="flex-1 bg-gradient-to-r from-orange-50 to-orange-100 border-orange-200 
-                  text-sm font-medium rounded-xl h-12 hover:shadow-md transition-all duration-300
-                  active:scale-95 focus:ring-2 focus:ring-orange-300"
+                  text-sm font-medium rounded-xl h-12 hover:shadow-md transition-all duration-200
+                  focus:ring-2 focus:ring-orange-200"
                 >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-0 shadow-xl">
-                  <SelectItem value="this-month" className="rounded-lg">
-                    This Month
-                  </SelectItem>
-                  <SelectItem value="last-month" className="rounded-lg">
-                    Last Month
-                  </SelectItem>
-                  <SelectItem value="last-3-months" className="rounded-lg">
-                    Last 3 Months
-                  </SelectItem>
-                  <SelectItem value="last-6-months" className="rounded-lg">
-                    Last 6 Months
-                  </SelectItem>
-                  <SelectItem value="this-year" className="rounded-lg">
-                    This Year
-                  </SelectItem>
+                  {dateOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value} className="rounded-lg">
+                      {opt.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
             <div className="flex items-center gap-3">
               <div className="w-5 h-5 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex-shrink-0"></div>
-              <Select value={categoryFilter} onValueChange={onCategoryFilterChange}>
+              <Select value={categoryFilter} onValueChange={handleCategoryChange}>
                 <SelectTrigger
                   className="flex-1 bg-gradient-to-r from-blue-50 to-blue-100 border-blue-200 
-                  text-sm font-medium rounded-xl h-12 hover:shadow-md transition-all duration-300
-                  active:scale-95 focus:ring-2 focus:ring-blue-300"
+                  text-sm font-medium rounded-xl h-12 hover:shadow-md transition-all duration-200
+                  focus:ring-2 focus:ring-blue-200"
                 >
                   <SelectValue placeholder="All Categories" />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-0 shadow-xl">
-                  <SelectItem value="all" className="rounded-lg">
-                    All Categories
-                  </SelectItem>
-                  <SelectItem value="food" className="rounded-lg">
-                    Food & Dining
-                  </SelectItem>
-                  <SelectItem value="transport" className="rounded-lg">
-                    Transportation
-                  </SelectItem>
-                  <SelectItem value="entertainment" className="rounded-lg">
-                    Entertainment
-                  </SelectItem>
-                  <SelectItem value="utilities" className="rounded-lg">
-                    Utilities
-                  </SelectItem>
-                  <SelectItem value="shopping" className="rounded-lg">
-                    Shopping
-                  </SelectItem>
-                  <SelectItem value="healthcare" className="rounded-lg">
-                    Healthcare
-                  </SelectItem>
+                  {categoryOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value} className="rounded-lg">
+                      {opt.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
@@ -113,62 +108,36 @@ export function DashboardFilters({
           <div className="flex gap-4">
             <div className="flex items-center gap-3">
               <Calendar className="w-5 h-5 text-gray-500" />
-              <Select value={dateRange} onValueChange={onDateRangeChange}>
+              <Select value={dateRange} onValueChange={handleDateChange}>
                 <SelectTrigger
                   className="w-44 bg-gray-50 border-gray-200 text-sm rounded-xl h-11
-                  hover:bg-white hover:shadow-md transition-all duration-300 focus:ring-2 focus:ring-orange-300"
+                  hover:bg-white hover:shadow-md transition-all duration-200 focus:ring-2 focus:ring-orange-200"
                 >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-0 shadow-xl">
-                  <SelectItem value="this-month" className="rounded-lg">
-                    This Month
-                  </SelectItem>
-                  <SelectItem value="last-month" className="rounded-lg">
-                    Last Month
-                  </SelectItem>
-                  <SelectItem value="last-3-months" className="rounded-lg">
-                    Last 3 Months
-                  </SelectItem>
-                  <SelectItem value="last-6-months" className="rounded-lg">
-                    Last 6 Months
-                  </SelectItem>
-                  <SelectItem value="this-year" className="rounded-lg">
-                    This Year
-                  </SelectItem>
+                  {dateOptions.map(opt => (
+                    <SelectItem key={opt.value} value={opt.value} className="rounded-lg">
+                      {opt.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <Select value={categoryFilter} onValueChange={onCategoryFilterChange}>
+            <Select value={categoryFilter} onValueChange={handleCategoryChange}>
               <SelectTrigger
                 className="w-44 bg-gray-50 border-gray-200 text-sm rounded-xl h-11
-                hover:bg-white hover:shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-300"
+                hover:bg-white hover:shadow-md transition-all duration-200 focus:ring-2 focus:ring-blue-200"
               >
                 <SelectValue placeholder="All Categories" />
               </SelectTrigger>
               <SelectContent className="rounded-xl border-0 shadow-xl">
-                <SelectItem value="all" className="rounded-lg">
-                  All Categories
-                </SelectItem>
-                <SelectItem value="food" className="rounded-lg">
-                  Food & Dining
-                </SelectItem>
-                <SelectItem value="transport" className="rounded-lg">
-                  Transportation
-                </SelectItem>
-                <SelectItem value="entertainment" className="rounded-lg">
-                  Entertainment
-                </SelectItem>
-                <SelectItem value="utilities" className="rounded-lg">
-                  Utilities
-                </SelectItem>
-                <SelectItem value="shopping" className="rounded-lg">
-                  Shopping
-                </SelectItem>
-                <SelectItem value="healthcare" className="rounded-lg">
-                  Healthcare
-                </SelectItem>
+                {categoryOptions.map(opt => (
+                  <SelectItem key={opt.value} value={opt.value} className="rounded-lg">
+                    {opt.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>

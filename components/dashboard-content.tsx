@@ -1,6 +1,8 @@
 "use client"
 import { DashboardOverview } from "./dashboard-overview"
 import { TransactionsList } from "./transactions-list"
+import { BudgetView } from "./budget-view"
+import { SettingsView } from "./settings-view"
 // STAGE 2 FEATURE COMMENTED OUT - BudgetView and SettingsView imports removed
 
 interface DashboardContentProps {
@@ -21,7 +23,12 @@ export function DashboardContent({
   switch (currentView) {
     case "transactions":
       return <TransactionsList onAddTransaction={onAddTransaction} transactions={transactions} />
-    // STAGE 2 FEATURE COMMENTED OUT - Budget and Settings cases removed
+    case "budget":
+      // Budget management view - track and visualize your budgets
+      return <BudgetView />
+    case "settings":
+      // Settings page - manage preferences and data
+      return <SettingsView />
     default:
       // Stage 2: Dashboard overview with analytics and filters
       return <DashboardOverview onAddTransaction={onAddTransaction} onNavigate={onNavigate} />

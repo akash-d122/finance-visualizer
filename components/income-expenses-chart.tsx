@@ -90,13 +90,13 @@ export function IncomeExpensesChart({ dateRange, categoryFilter }: IncomeExpense
               </CardTitle>
               <div className="flex items-center gap-4 mt-2 flex-wrap">
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
                   <span className="text-xs sm:text-sm text-gray-600 font-medium">
                     Income: ₹{totalIncome.toLocaleString("en-IN")}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                   <span className="text-xs sm:text-sm text-gray-600 font-medium">
                     Expenses: ₹{totalExpenses.toLocaleString("en-IN")}
                   </span>
@@ -117,7 +117,7 @@ export function IncomeExpensesChart({ dateRange, categoryFilter }: IncomeExpense
           <div className="w-full h-64 md:h-80 flex items-center justify-center">
             <div className="flex flex-col items-center gap-3">
               <div className="w-8 h-8 border-4 border-orange-200 border-t-orange-500 rounded-full animate-spin"></div>
-              <span className="text-sm text-gray-500 animate-pulse">Loading chart data...</span>
+              <span className="text-sm text-gray-500">Loading chart data...</span>
             </div>
           </div>
         ) : (

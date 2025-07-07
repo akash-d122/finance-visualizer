@@ -19,7 +19,10 @@ export function MobileHeader({ onMenuClick, currentView, onNavigate }: MobileHea
     switch (view) {
       case "transactions":
         return "Transactions"
-      // STAGE 2 FEATURE COMMENTED OUT - Budget and Settings removed
+      case "budget":
+        return "Budget"
+      case "settings":
+        return "Settings"
       default:
         return "Dashboard"
     }

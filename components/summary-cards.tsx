@@ -124,7 +124,7 @@ export function SummaryCards({ dateRange, categoryFilter, onNavigate }: SummaryC
               <div className="flex items-center gap-2 min-w-0 flex-1">
                 <span
                   className={`text-lg sm:text-xl lg:text-2xl ${item.textColor} 
-                  animate-pulse group-hover:animate-bounce flex-shrink-0 transition-transform duration-300`}
+                  flex-shrink-0 transition-transform duration-300`}
                 >
                   {item.icon}
                 </span>

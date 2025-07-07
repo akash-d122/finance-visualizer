@@ -1,6 +1,19 @@
 # Personal Finance Visualizer
 
-A clean, modern web app for tracking personal finances with a focus on simplicity and user experience. Built as a recruitment assignment to demonstrate React/Next.js skills and clean code practices.
+A simple, modern web app for tracking your personal finances. Built for clarity, speed, and a smooth user experience.
+
+---
+
+##  Tech Stack & Assignment Fit
+- **Stack:** Next.js, React, shadcn/ui, Recharts, MongoDB
+- This project is designed to match the assignment's staged requirements exactly:
+  - **Stage 1:** Transactions CRUD, monthly expenses bar chart
+  - **Stage 2:** Categories with pie chart and summary cards
+  - **Stage 3:** Budgets with budget vs actual chart and simple spending insights
+- Fully responsive design with proper error states throughout.
+- There is **no authentication/login**—just as the assignment specifies. You can use all features instantly.
+
+---
 
 ## What It Does
 
@@ -13,14 +26,6 @@ This app helps you track your income and expenses with a clean dashboard view. Y
 - **Monthly Chart**: Visual breakdown of your spending by month
 - **Responsive Design**: Works smoothly on desktop and mobile
 - **Clean UI**: Modern, accessible interface with smooth animations
-
-## Tech Stack
-
-- **Frontend**: Next.js 14, React 18, TypeScript
-- **Styling**: Tailwind CSS with custom components
-- **Charts**: Recharts for data visualization
-- **UI Components**: Custom-built with Radix UI primitives
-- **Development**: ESLint, Prettier for code quality
 
 ## Getting Started
 

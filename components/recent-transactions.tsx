@@ -10,7 +10,7 @@ const transactions = [
   {
     id: 1,
     name: "Swiggy Food Order",
-    date: "Aug 22, 2024",
+    date: "Apr 22, 2025",
     amount: "₹450.00",
     time: "10:00 AM",
     account: "HDFC 7834",
@@ -21,7 +21,7 @@ const transactions = [
   {
     id: 2,
     name: "Netflix Subscription",
-    date: "Aug 21, 2024",
+    date: "Mar 21, 2025",
     amount: "₹199.00",
     time: "2:30 PM",
     account: "HDFC 7834",
@@ -32,7 +32,7 @@ const transactions = [
   {
     id: 3,
     name: "Salary Credit",
-    date: "Aug 20, 2024",
+    date: "Feb 20, 2025",
     amount: "₹45,000.00",
     time: "9:00 AM",
     account: "SBI 1234",
@@ -43,7 +43,7 @@ const transactions = [
   {
     id: 4,
     name: "Big Bazaar",
-    date: "Aug 19, 2024",
+    date: "Jan 19, 2025",
     amount: "₹1,250.00",
     time: "6:45 PM",
     account: "HDFC 7834",
@@ -62,8 +62,10 @@ export function RecentTransactions({ onAddTransaction }: RecentTransactionsProps
     <Card className="bg-white border border-gray-200 shadow-sm hover:shadow-lg transition-shadow">
       <CardHeader className="pb-3 sm:pb-4 px-3 sm:px-4 lg:px-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Recent Transactions</CardTitle>
           <div className="flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold text-gray-900">Recent Transactions</CardTitle>
+          </div>
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <div className="relative flex-1 sm:flex-none">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
@@ -73,11 +75,10 @@ export function RecentTransactions({ onAddTransaction }: RecentTransactionsProps
             </div>
             <Button
               onClick={onAddTransaction}
-              size="sm"
-              className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white flex-shrink-0 text-xs sm:text-sm"
+              className="w-full sm:w-auto bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 hover:from-orange-500 hover:to-orange-700 focus:ring-2 focus:ring-orange-300 text-white text-xs sm:text-sm h-10 sm:h-11 rounded-xl shadow-md transition-all duration-200 flex items-center justify-center px-4"
             >
-              <Plus className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-              Add
+              <Plus className="w-4 h-4 mr-2" />
+              Add Transaction
             </Button>
           </div>
         </div>
