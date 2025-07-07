@@ -8,7 +8,51 @@ import { Budget } from "@/lib/models/Budget"
 // Each handler is wrapped in a try/catch for robust error handling.
 // You could extend this with budget alerts or recurring budgets.
 
+// NOTE: For assignment/demo use, this API will return dummy data if MONGODB_URI is not set.
+const dummyBudgets = [
+  {
+    id: 1,
+    category: "Food & Dining",
+    budgeted: 8000,
+    spent: 6500,
+    remaining: 1500,
+    period: "Monthly",
+    color: "bg-orange-500",
+  },
+  {
+    id: 2,
+    category: "Transportation",
+    budgeted: 5000,
+    spent: 5200,
+    remaining: -200,
+    period: "Monthly",
+    color: "bg-blue-500",
+  },
+  {
+    id: 3,
+    category: "Entertainment",
+    budgeted: 3000,
+    spent: 1800,
+    remaining: 1200,
+    period: "Monthly",
+    color: "bg-purple-500",
+  },
+  {
+    id: 4,
+    category: "Utilities",
+    budgeted: 4000,
+    spent: 3800,
+    remaining: 200,
+    period: "Monthly",
+    color: "bg-green-500",
+  },
+]
+
 export async function GET(req: NextRequest) {
+  if (!process.env.MONGODB_URI) {
+    // No DB? No problem! Return dummy data for assignment/demo.
+    return NextResponse.json({ budgets: dummyBudgets })
+  }
   await connectToDatabase()
   try {
     // Optionally, you could add query params for filtering by period or category
@@ -20,6 +64,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  if (!process.env.MONGODB_URI) {
+    return NextResponse.json({ error: "POST not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
+  }
   await connectToDatabase()
   try {
     const body = await req.json()
@@ -32,6 +79,9 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
+  if (!process.env.MONGODB_URI) {
+    return NextResponse.json({ error: "PUT not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
+  }
   await connectToDatabase()
   try {
     const { _id, ...update } = await req.json()
@@ -49,6 +99,9 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
+  if (!process.env.MONGODB_URI) {
+    return NextResponse.json({ error: "DELETE not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
+  }
   await connectToDatabase()
   try {
     const { _id } = await req.json()
