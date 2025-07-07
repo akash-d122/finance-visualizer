@@ -53,18 +53,16 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent
-        className="sm:max-w-md rounded-2xl shadow-2xl border-0 p-0 overflow-hidden
-        animate-in fade-in zoom-in-95 duration-300"
+        className="w-full max-w-full sm:max-w-md max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl border-0 p-0 animate-in fade-in zoom-in-95 duration-300"
       >
         {/* Modal header with gradient background */}
-        <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 border-b border-orange-200">
+        <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-4 border-b border-orange-200">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-gray-900 flex items-center gap-3">
+            <DialogTitle className="text-lg font-bold text-gray-900 flex items-center gap-2">
               <div
-                className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl 
-                flex items-center justify-center"
+                className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center"
               >
-                <span className="text-white text-lg">💳</span>
+                <span className="text-white text-base">💳</span>
               </div>
               Add Transaction
             </DialogTitle>
@@ -72,34 +70,29 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
         </div>
 
         {/* Form content */}
-        <div className="p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="p-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
             {/* Transaction type selection */}
-            <div className="space-y-3">
-              <Label htmlFor="type" className="text-sm font-semibold text-gray-700">
+            <div className="space-y-2">
+              <Label htmlFor="type" className="text-xs font-semibold text-gray-700">
                 Type *
               </Label>
               <Select value={transactionType} onValueChange={setTransactionType} required>
                 <SelectTrigger
-                  className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 
-                  h-12 text-base hover:shadow-md transition-all duration-300"
+                  className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 h-10 text-sm hover:shadow-md transition-all duration-300"
                 >
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-0 shadow-xl">
-                  <SelectItem value="income" className="rounded-lg">
-                    Income
-                  </SelectItem>
-                  <SelectItem value="expense" className="rounded-lg">
-                    Expense
-                  </SelectItem>
+                  <SelectItem value="income" className="rounded-lg text-sm">Income</SelectItem>
+                  <SelectItem value="expense" className="rounded-lg text-sm">Expense</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Amount input */}
-            <div className="space-y-3">
-              <Label htmlFor="amount" className="text-sm font-semibold text-gray-700">
+            <div className="space-y-2">
+              <Label htmlFor="amount" className="text-xs font-semibold text-gray-700">
                 Amount *
               </Label>
               <Input
@@ -108,8 +101,7 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
                 placeholder="Enter amount"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 
-                  h-12 text-base hover:shadow-md transition-all duration-300"
+                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 h-10 text-sm hover:shadow-md transition-all duration-300"
                 required
                 min="0"
                 step="0.01"
@@ -117,8 +109,8 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
             </div>
 
             {/* Date selection */}
-            <div className="space-y-3">
-              <Label htmlFor="date" className="text-sm font-semibold text-gray-700">
+            <div className="space-y-2">
+              <Label htmlFor="date" className="text-xs font-semibold text-gray-700">
                 Date *
               </Label>
               <Input
@@ -126,15 +118,14 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 
-                  h-12 text-base hover:shadow-md transition-all duration-300"
+                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 h-10 text-sm hover:shadow-md transition-all duration-300"
                 required
               />
             </div>
 
             {/* Description textarea */}
-            <div className="space-y-3">
-              <Label htmlFor="description" className="text-sm font-semibold text-gray-700">
+            <div className="space-y-2">
+              <Label htmlFor="description" className="text-xs font-semibold text-gray-700">
                 Description *
               </Label>
               <Textarea
@@ -142,55 +133,50 @@ export function TransactionModal({ isOpen, onClose, onAddTransaction }: Transact
                 placeholder="Enter transaction description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 resize-none
-                  text-base hover:shadow-md transition-all duration-300"
+                rows={2}
+                className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 resize-none text-sm hover:shadow-md transition-all duration-300"
                 required
               />
             </div>
 
             {/* Category selection - Stage 2 feature restored! */}
-            <div className="space-y-3">
-              <Label htmlFor="category" className="text-sm font-semibold text-gray-700">
+            <div className="space-y-2">
+              <Label htmlFor="category" className="text-xs font-semibold text-gray-700">
                 Category *
               </Label>
               <Select value={category} onValueChange={setCategory} required>
                 <SelectTrigger
-                  className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 \
-                  h-12 text-base hover:shadow-md transition-all duration-300"
+                  className="rounded-xl border-gray-200 focus:border-orange-300 focus:ring-orange-200 h-10 text-sm hover:shadow-md transition-all duration-300"
                 >
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
                 <SelectContent className="rounded-xl border-0 shadow-xl">
-                  <SelectItem value="Food & Dining" className="rounded-lg">Food & Dining</SelectItem>
-                  <SelectItem value="Transportation" className="rounded-lg">Transportation</SelectItem>
-                  <SelectItem value="Entertainment" className="rounded-lg">Entertainment</SelectItem>
-                  <SelectItem value="Utilities" className="rounded-lg">Utilities</SelectItem>
-                  <SelectItem value="Shopping" className="rounded-lg">Shopping</SelectItem>
-                  <SelectItem value="Healthcare" className="rounded-lg">Healthcare</SelectItem>
-                  <SelectItem value="Income" className="rounded-lg">Income</SelectItem>
-                  <SelectItem value="Freelance" className="rounded-lg">Freelance</SelectItem>
-                  <SelectItem value="Other" className="rounded-lg">Other</SelectItem>
+                  <SelectItem value="Food & Dining" className="rounded-lg text-sm">Food & Dining</SelectItem>
+                  <SelectItem value="Transportation" className="rounded-lg text-sm">Transportation</SelectItem>
+                  <SelectItem value="Entertainment" className="rounded-lg text-sm">Entertainment</SelectItem>
+                  <SelectItem value="Utilities" className="rounded-lg text-sm">Utilities</SelectItem>
+                  <SelectItem value="Shopping" className="rounded-lg text-sm">Shopping</SelectItem>
+                  <SelectItem value="Healthcare" className="rounded-lg text-sm">Healthcare</SelectItem>
+                  <SelectItem value="Income" className="rounded-lg text-sm">Income</SelectItem>
+                  <SelectItem value="Freelance" className="rounded-lg text-sm">Freelance</SelectItem>
+                  <SelectItem value="Other" className="rounded-lg text-sm">Other</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Form actions */}
-            <div className="flex gap-3 pt-6">
+            <div className="flex gap-2 pt-4">
               <Button
                 type="button"
                 variant="outline"
                 onClick={onClose}
-                className="flex-1 rounded-xl border-gray-200 hover:bg-gray-50 bg-transparent h-12 font-semibold
-                  hover:shadow-md active:scale-95 transition-all duration-300"
+                className="flex-1 rounded-xl border-gray-200 hover:bg-gray-50 bg-transparent h-10 text-sm font-semibold hover:shadow-md active:scale-95 transition-all duration-300"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
-                className="flex-1 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 
-                  hover:from-orange-600 hover:to-orange-700 h-12 font-semibold
-                  hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
+                className="flex-1 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 h-10 text-sm font-semibold hover:shadow-lg hover:scale-105 active:scale-95 transition-all duration-300"
               >
                 Add Transaction
               </Button>
