@@ -2,7 +2,6 @@
 
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongoose"
-import { Transaction } from "@/lib/models/Transaction"
 
 // This API route handles all CRUD operations for transactions.
 // Each handler is wrapped in a try/catch for robust error handling.
@@ -62,6 +61,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ transactions: dummyTransactions })
   }
   await connectToDatabase()
+  const { Transaction } = await import("@/lib/models/Transaction")
   try {
     // Optionally, you could add query params for filtering or pagination
     const transactions = await Transaction.find().sort({ date: -1 })
@@ -76,6 +76,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "POST not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Transaction } = await import("@/lib/models/Transaction")
   try {
     const body = await req.json()
     // You could add more validation here for production
@@ -91,6 +92,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "PUT not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Transaction } = await import("@/lib/models/Transaction")
   try {
     const { _id, ...update } = await req.json()
     if (!_id) {
@@ -111,6 +113,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "DELETE not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Transaction } = await import("@/lib/models/Transaction")
   try {
     const { _id } = await req.json()
     if (!_id) {

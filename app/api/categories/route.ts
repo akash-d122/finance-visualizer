@@ -2,7 +2,6 @@
 
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongoose"
-import { Category } from "@/lib/models/Category"
 
 // This API route handles all CRUD operations for categories.
 // Each handler is wrapped in a try/catch for robust error handling.
@@ -24,6 +23,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ categories: dummyCategories })
   }
   await connectToDatabase()
+  const { Category } = await import("@/lib/models/Category")
   try {
     const categories = await Category.find().sort({ name: 1 })
     return NextResponse.json({ categories })
@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "POST not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Category } = await import("@/lib/models/Category")
   try {
     const body = await req.json()
     // You could add more validation here for production
@@ -52,6 +53,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "PUT not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Category } = await import("@/lib/models/Category")
   try {
     const { _id, ...update } = await req.json()
     if (!_id) {
@@ -72,6 +74,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "DELETE not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Category } = await import("@/lib/models/Category")
   try {
     const { _id } = await req.json()
     if (!_id) {

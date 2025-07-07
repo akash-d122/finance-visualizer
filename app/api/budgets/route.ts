@@ -2,7 +2,6 @@
 
 import { NextRequest, NextResponse } from "next/server"
 import { connectToDatabase } from "@/lib/mongoose"
-import { Budget } from "@/lib/models/Budget"
 
 // This API route handles all CRUD operations for budgets.
 // Each handler is wrapped in a try/catch for robust error handling.
@@ -54,6 +53,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ budgets: dummyBudgets })
   }
   await connectToDatabase()
+  const { Budget } = await import("@/lib/models/Budget")
   try {
     // Optionally, you could add query params for filtering by period or category
     const budgets = await Budget.find().sort({ period: -1 })
@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "POST not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Budget } = await import("@/lib/models/Budget")
   try {
     const body = await req.json()
     // You could add more validation here for production
@@ -83,6 +84,7 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ error: "PUT not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Budget } = await import("@/lib/models/Budget")
   try {
     const { _id, ...update } = await req.json()
     if (!_id) {
@@ -103,6 +105,7 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "DELETE not available in demo mode. Add MONGODB_URI for full functionality." }, { status: 501 })
   }
   await connectToDatabase()
+  const { Budget } = await import("@/lib/models/Budget")
   try {
     const { _id } = await req.json()
     if (!_id) {
