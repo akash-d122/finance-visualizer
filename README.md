@@ -23,7 +23,7 @@ A simple, modern web app for tracking your personal finances. Built for clarity,
 
 This app helps you track your income and expenses with a clean dashboard view. You can add transactions, view them in a list, and see your monthly spending patterns in a simple chart. It's designed to be intuitive and easy to use - no overwhelming features, just the essentials done well.
 
-## Features (Stage 1)
+## Features
 
 - **Add Transactions**: Simple form to add income or expense entries
 - **Transaction List**: View all your transactions with basic filtering
