@@ -1,6 +1,3 @@
-# 🚩 Important Note for Recruiter:
-
-This is a **Stage 3 implementation** of the Personal Finance Visualizer (all features complete), but I filled out the assignment form as **Stage 1**. Please review this repo as a full, polished demo with all advanced features included.
 
 # Personal Finance Visualizer
 
